@@ -4,6 +4,7 @@ from collections import defaultdict
 import json
 import requests
 import datetime
+import codecs
 
 
 def load_amap_cities():
@@ -128,7 +129,7 @@ def count_to_color(confirm, suspect):
 
 
 def write_result(result):
-    writer = open('confirmed_data.js', 'w')
+    writer = codecs.open('confirmed_data.js', 'w', 'utf-8')
     writer.write('const LAST_UPDATE = "')
     writer.write(datetime.datetime.now(datetime.timezone(
         datetime.timedelta(hours=8))).strftime('%Y.%m.%d-%H:%M:%S'))
@@ -139,7 +140,7 @@ def write_result(result):
 
 
 def main():
-    confirmed_count, suspected_count = get_confirmed_count_tx()
+    confirmed_count, suspected_count = get_confirmed_count_dxy()
     result = {}
     for code in amap_code_to_city:
         # 现在数据源的疑似都是 0 了
